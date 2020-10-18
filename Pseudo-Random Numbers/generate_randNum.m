@@ -25,7 +25,7 @@ Rn = numbers / m;
 % plot histogram of Rn
 histogram(Rn);
 
-%{ --- }%
+%---%
 
 % initialize variables
 m = 2048;
