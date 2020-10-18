@@ -1,9 +1,15 @@
-%   @file   MillerRabinPrimalityTest.m
-%   @brief  This script implements the Miller Rabin Primality Test on the 
-%           entered integer numbers. The output is 1 if the number is prime
-%           and 0 if the number is composite.
-%   @author Mustafa Siddiqui
-%   @date   10/16/2020
+%{      @file   MillerRabinPrimalityTest.m
+        @brief  This script contains a function that implements the Miller Rabin 
+                Primality Test on the entered integer numbers. The output is 1 if 
+                the number is prime and 0 if the number is composite.
+                Additionally, the program contains a function that generates 
+                10-digit pseudo-random numbers with last digits 1, 3, 7, or 9. The
+                script implements the Miller Rabin Primality Test on the number. The
+                number is incremented in a certain manner until the resulting number
+                is a prime number. Thus, a 10-digit prime number is generated.
+        @author Mustafa Siddiqui
+        @date   10/16/2020
+%}
 
 % array to hold all prime numbers less than 500
 global aV;
