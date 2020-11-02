@@ -1,4 +1,5 @@
-%{      @file   MillerRabinPrimalityTest.m
+%{
+        @file   MillerRabinPrimalityTest.m
         @brief  This script contains a function that implements the Miller Rabin 
                 Primality Test on the entered integer numbers. The output is 1 if 
                 the number is prime and 0 if the number is composite.
