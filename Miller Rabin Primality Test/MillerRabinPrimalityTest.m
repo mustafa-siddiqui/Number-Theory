@@ -150,7 +150,7 @@ function [randNum, lastDigit] = random()
         % get a random 10-digit number and truncate to get integer
         randNum = fix((1000000000 * rand()) + 1000000000);
 
-        % convert number to string and get last digit
+        % get last digit
         lastDigit = rem(randNum, 10);
         
         if (lastDigit == 1 || ...
