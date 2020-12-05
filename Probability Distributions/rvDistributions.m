@@ -51,17 +51,32 @@ xlabel('Failure, Success');
 ylabel('P(X)');
 
 %% Conversion to Poisson Distribution
-alpha = 3;
-pmfPoisson = zeros(11, 1);
+% if alpha = 3, k = 0-10, comparison element = 3/10 = 0.3
+k = zeros(11, 1);
+success = 0;
 
-% calculate pmf
-% P(N=k) = α^k/k! * e^(-α) for k = 0,1,...
-for k = 1:11
-    pmfPoisson(k) = (alpha^(k-1) * exp(-alpha)) / factorial(k-1);
+% run 10^5 comparisons and record the number of successes per every 10
+% elements according to the number of successes found
+% i.e. if 3 successes, increment pmfPoisson(3) by 1
+c = 1;
+for i = 1:1000
+    for j = 1:10
+        if (Rn(c) < 0.3)
+            success = success + 1;
+        end
+        c = c + 1;
+    end
+    
+    % record how many number of successes per every 10 elements
+    k(success + 1) = k(success + 1) + 1;
+    success = 0;
 end
 
+% scale to appropriate probabilities (< 1)
+k = k / 1000;
+
 figure(3);
-bar((0:10), pmfPoisson);
+stem((0:10), k);
 title('Poisson Distribution');
 xlabel('k');
 ylabel('P(N=k)');
@@ -100,8 +115,8 @@ pmfPoisson0 = zeros(11, 10);
 figure(4);
 for k = 1:11
     for i = 1:10
-        pmfPoisson1(k, i) = (alpha1(i)^(k-1) * exp(-alpha1(i))) / factorial(k-1);
-        pmfPoisson0(k, i) = (alpha0(i)^(k-1) * exp(-alpha0(i))) / factorial(k-1);
+        pmfPoisson1(k, i) = (alpha1(i)^(k-1) * exp(-alpha1(i))) / ((alpha1(i)^(k-1) * exp(-alpha1(i))) + (alpha0(i)^(k-1) * exp(-alpha0(i))));
+        pmfPoisson0(k, i) = (alpha0(i)^(k-1) * exp(-alpha0(i))) / ((alpha1(i)^(k-1) * exp(-alpha1(i))) + (alpha0(i)^(k-1) * exp(-alpha0(i))));
     end
     plot(1:10, pmfPoisson1(k, :));
     hold on;
@@ -125,14 +140,20 @@ t = 1;
 alpha1 = 7 * t;
 alpha0 = 2 * t;
 
+% Note that the factorials in the denominator get cancelled out
+% P(SignalPresent | X = k)
+% P(SignalPresent | X = k) = P(X=k | SignalPresent) / (P(X=k | SignalPresent) + P(X=k | SignalAbsent))
 pmfPoisson1 = zeros(10, 1);
+
+% P(SignalAbsent | X = k)
+% P(SignalPresent | X = k) = P(X=k | SignalAbsent) / (P(X=k | SignalPresent) + P(X=k | SignalAbsent))
 pmfPoisson0 = zeros(10, 1);
 
 % calculate pmf
 % P(N=k) = α^k/k! * e^(-α) for k = 0,1,...
 for k = 1:11
-    pmfPoisson1(k) = (alpha1^(k-1) * exp(-alpha1)) / factorial(k-1);
-    pmfPoisson0(k) = (alpha0^(k-1) * exp(-alpha0)) / factorial(k-1);
+    pmfPoisson1(k) = (alpha1^(k-1) * exp(-alpha1)) / ((alpha1^(k-1) * exp(-alpha1)) + (alpha0^(k-1) * exp(-alpha0)));
+    pmfPoisson0(k) = (alpha0^(k-1) * exp(-alpha0)) / ((alpha1^(k-1) * exp(-alpha1)) + (alpha0^(k-1) * exp(-alpha0)));
 end
 
 % signal is present when P(SignalPresent | X=k) > P(SignalAbsent | X=k)

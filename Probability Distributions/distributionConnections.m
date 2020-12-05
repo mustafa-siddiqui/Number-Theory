@@ -183,6 +183,7 @@ sgtitle('Normal Distribution');
 %{ 
     Calculate Binomial Coefficient with large numbers.
     Makes use of symbolic variables to keep precision for large values
+    c = n! / ((n-k)! * k!)
 %}
 function c = binomCoefficient(n, k)
     if (k > n)
