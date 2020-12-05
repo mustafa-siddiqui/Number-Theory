@@ -67,6 +67,8 @@ n = 21;
 pmfPoisson = zeros(21, 1);
 cdfPoisson = zeros(21, 1);
 for i = 1:n
+    % calculate pmf
+    % pmf = α^k * exp(-α) / k!
     pmfPoisson(i) = (alpha^(i-1) * exp(-alpha)) / factorial(i-1);
     if (i == 1)
         cdfPoisson(i) = pmfPoisson(i);
@@ -129,7 +131,6 @@ sgtitle('Connection between Binomial and Poisson Distributions');
 %% Connecting Binomial and Normal Distributions
 n = [10, 20, 30, 50];
 p = 0.7;
-x = 1000;
 
 % cell array to store pdfs and cdfs
 normal = cell(length(n), 2);
